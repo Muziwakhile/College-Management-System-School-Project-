@@ -48,7 +48,7 @@ namespace CollegeManagementSystem
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
-            FormOperations.student = null;
+            //FormOperations.student = null;
             FormOperations._ID = 0;
             FormOperations.OpenMenu();
             this.Close();
@@ -57,7 +57,7 @@ namespace CollegeManagementSystem
 
         private void PaymentFrm_Load(object sender, EventArgs e)
         {
-            Refresh(FormOperations.student.ID);
+            //Refresh(FormOperations.student.ID);
             if (FormOperations._ID != 0)
             {
                 Studenttxt.Text = FormOperations._ID.ToString();
@@ -89,7 +89,7 @@ namespace CollegeManagementSystem
                     DialogResult msg = MessageBox.Show("Payment Saved Successfully. Do you want to make other payments?","Payment Notifcation",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
                     if (DialogResult.No == msg)
                     {
-                        FormOperations.student = null;
+                        //FormOperations.student = null;
                         FormOperations._ID = 0;
                         FormOperations.OpenMenu();
                         this.Close();
@@ -102,7 +102,7 @@ namespace CollegeManagementSystem
                         Amounttxt.Clear();
                         dataGridView1.DataSource = null;
                         Amounttxtx.Text = 0.ToString();
-                        FormOperations.student = null;
+                        //FormOperations.student = null;
                         FormOperations._ID = 0;
                     }
                    
@@ -144,6 +144,10 @@ namespace CollegeManagementSystem
                     {
                         Studenttxt.Text = s.ID.ToString();
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Student not Found");
                 }
                
             }

@@ -50,7 +50,7 @@ namespace CollegeManagementSystem
                         }
                         else
                         {
-                            FormOperations.student = null;
+                            //FormOperations.student = null;
                             FormOperations._ID = 0;
                             FormOperations.OpenMenu();
                             this.Close();

@@ -104,7 +104,7 @@ namespace CollegeManagementSystem.DTO
             {
                 var result = (from i in entity.student_tbl
                               where i.StudentId == ID & i.StatusId == 1
-                              select i).Single();
+                              select i).SingleOrDefault();
                 if (result == null)
                 {
                     return null;
