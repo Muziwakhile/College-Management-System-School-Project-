@@ -1,0 +1,566 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="cmsdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="course_tble">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseCode" Type="varchar" MaxLength="20" />
+          <Property Name="CourseName" Type="varchar" MaxLength="50" />
+          <Property Name="CourseDuration" Type="int" />
+          <Property Name="StatusId" Type="int" />
+        </EntityType>
+        <EntityType Name="gaurdian_tbl">
+          <Key>
+            <PropertyRef Name="GaurdianId" />
+          </Key>
+          <Property Name="GaurdianId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Surname" Type="varchar" MaxLength="25" />
+          <Property Name="Gender" Type="varchar" MaxLength="8" />
+          <Property Name="Cell" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="35" />
+          <Property Name="StudentId" Type="int" />
+        </EntityType>
+        <EntityType Name="payment_tbl">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" />
+          <Property Name="Amount" Type="double" />
+          <Property Name="CaptureDate" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="status_tbl">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="student_tbl">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Surname" Type="varchar" MaxLength="25" />
+          <Property Name="Gender" Type="varchar" MaxLength="8" />
+          <Property Name="Cell" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="35" />
+          <Property Name="PostallAddress" Type="varchar" MaxLength="100" />
+          <Property Name="Semester" Type="int" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="StatusId" Type="int" />
+        </EntityType>
+        <EntityType Name="teacher_tbl">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Surname" Type="varchar" MaxLength="25" />
+          <Property Name="Gender" Type="varchar" MaxLength="8" />
+          <Property Name="Cell" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="35" />
+          <Property Name="PIN" Type="varchar" MaxLength="20" />
+          <Property Name="StatusId" Type="int" />
+        </EntityType>
+        <EntityType Name="user_tbl">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="35" />
+          <Property Name="Password" Type="varchar" MaxLength="35" />
+          <Property Name="StatusId" Type="int" />
+        </EntityType>
+        <Association Name="course_tble_ibfk_1">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="course_tble" Type="Self.course_tble" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="course_tble">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gaurdian_tbl_ibfk_1">
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="0..1" />
+          <End Role="gaurdian_tbl" Type="Self.gaurdian_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_tbl">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="gaurdian_tbl">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payment_tbl_ibfk_1">
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="0..1" />
+          <End Role="payment_tbl" Type="Self.payment_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_tbl">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="payment_tbl">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payment_tbl_ibfk_2">
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="0..1" />
+          <End Role="payment_tbl" Type="Self.payment_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_tbl">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="payment_tbl">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_tbl_ibfk_1">
+          <End Role="course_tble" Type="Self.course_tble" Multiplicity="0..1" />
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course_tble">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="student_tbl">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_tbl_ibfk_2">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="student_tbl">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teacher_tbl_ibfk_1">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="teacher_tbl" Type="Self.teacher_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="teacher_tbl">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_tbl_ibfk_1">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="user_tbl">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cmsdbModelStoreContainer">
+          <EntitySet Name="course_tble" EntityType="Self.course_tble" Schema="cmsdb" store:Type="Tables" />
+          <EntitySet Name="gaurdian_tbl" EntityType="Self.gaurdian_tbl" Schema="cmsdb" store:Type="Tables" />
+          <EntitySet Name="payment_tbl" EntityType="Self.payment_tbl" Schema="cmsdb" store:Type="Tables" />
+          <EntitySet Name="status_tbl" EntityType="Self.status_tbl" Schema="cmsdb" store:Type="Tables" />
+          <EntitySet Name="student_tbl" EntityType="Self.student_tbl" Schema="cmsdb" store:Type="Tables" />
+          <EntitySet Name="teacher_tbl" EntityType="Self.teacher_tbl" Schema="cmsdb" store:Type="Tables" />
+          <EntitySet Name="user_tbl" EntityType="Self.user_tbl" Schema="cmsdb" store:Type="Tables" />
+          <AssociationSet Name="course_tble_ibfk_1" Association="Self.course_tble_ibfk_1">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="course_tble" EntitySet="course_tble" />
+          </AssociationSet>
+          <AssociationSet Name="gaurdian_tbl_ibfk_1" Association="Self.gaurdian_tbl_ibfk_1">
+            <End Role="student_tbl" EntitySet="student_tbl" />
+            <End Role="gaurdian_tbl" EntitySet="gaurdian_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="payment_tbl_ibfk_1" Association="Self.payment_tbl_ibfk_1">
+            <End Role="student_tbl" EntitySet="student_tbl" />
+            <End Role="payment_tbl" EntitySet="payment_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="payment_tbl_ibfk_2" Association="Self.payment_tbl_ibfk_2">
+            <End Role="user_tbl" EntitySet="user_tbl" />
+            <End Role="payment_tbl" EntitySet="payment_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="student_tbl_ibfk_1" Association="Self.student_tbl_ibfk_1">
+            <End Role="course_tble" EntitySet="course_tble" />
+            <End Role="student_tbl" EntitySet="student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="student_tbl_ibfk_2" Association="Self.student_tbl_ibfk_2">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="student_tbl" EntitySet="student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="teacher_tbl_ibfk_1" Association="Self.teacher_tbl_ibfk_1">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="teacher_tbl" EntitySet="teacher_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="user_tbl_ibfk_1" Association="Self.user_tbl_ibfk_1">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="user_tbl" EntitySet="user_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cmsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="course_tble">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CourseDuration" Type="Int32" />
+          <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="status_tbl" Relationship="Self.course_tble_ibfk_1" FromRole="course_tble" ToRole="status_tbl" />
+          <NavigationProperty Name="student_tbl" Relationship="Self.student_tbl_ibfk_1" FromRole="course_tble" ToRole="student_tbl" />
+        </EntityType>
+        <EntityType Name="gaurdian_tbl">
+          <Key>
+            <PropertyRef Name="GaurdianId" />
+          </Key>
+          <Property Name="GaurdianId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Cell" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="StudentId" Type="Int32" />
+          <NavigationProperty Name="student_tbl" Relationship="Self.gaurdian_tbl_ibfk_1" FromRole="gaurdian_tbl" ToRole="student_tbl" />
+        </EntityType>
+        <EntityType Name="payment_tbl">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="CaptureDate" Type="DateTime" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="student_tbl" Relationship="Self.payment_tbl_ibfk_1" FromRole="payment_tbl" ToRole="student_tbl" />
+          <NavigationProperty Name="user_tbl" Relationship="Self.payment_tbl_ibfk_2" FromRole="payment_tbl" ToRole="user_tbl" />
+        </EntityType>
+        <EntityType Name="status_tbl">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="course_tble" Relationship="Self.course_tble_ibfk_1" FromRole="status_tbl" ToRole="course_tble" />
+          <NavigationProperty Name="student_tbl" Relationship="Self.student_tbl_ibfk_2" FromRole="status_tbl" ToRole="student_tbl" />
+          <NavigationProperty Name="teacher_tbl" Relationship="Self.teacher_tbl_ibfk_1" FromRole="status_tbl" ToRole="teacher_tbl" />
+          <NavigationProperty Name="user_tbl" Relationship="Self.user_tbl_ibfk_1" FromRole="status_tbl" ToRole="user_tbl" />
+        </EntityType>
+        <EntityType Name="student_tbl">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Cell" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="PostallAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Semester" Type="Int32" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="course_tble" Relationship="Self.student_tbl_ibfk_1" FromRole="student_tbl" ToRole="course_tble" />
+          <NavigationProperty Name="gaurdian_tbl" Relationship="Self.gaurdian_tbl_ibfk_1" FromRole="student_tbl" ToRole="gaurdian_tbl" />
+          <NavigationProperty Name="payment_tbl" Relationship="Self.payment_tbl_ibfk_1" FromRole="student_tbl" ToRole="payment_tbl" />
+          <NavigationProperty Name="status_tbl" Relationship="Self.student_tbl_ibfk_2" FromRole="student_tbl" ToRole="status_tbl" />
+        </EntityType>
+        <EntityType Name="teacher_tbl">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Cell" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="PIN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="status_tbl" Relationship="Self.teacher_tbl_ibfk_1" FromRole="teacher_tbl" ToRole="status_tbl" />
+        </EntityType>
+        <EntityType Name="user_tbl">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="payment_tbl" Relationship="Self.payment_tbl_ibfk_2" FromRole="user_tbl" ToRole="payment_tbl" />
+          <NavigationProperty Name="status_tbl" Relationship="Self.user_tbl_ibfk_1" FromRole="user_tbl" ToRole="status_tbl" />
+        </EntityType>
+        <Association Name="course_tble_ibfk_1">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="course_tble" Type="Self.course_tble" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="course_tble">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_tbl_ibfk_1">
+          <End Role="course_tble" Type="Self.course_tble" Multiplicity="0..1" />
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course_tble">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="student_tbl">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gaurdian_tbl_ibfk_1">
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="0..1" />
+          <End Role="gaurdian_tbl" Type="Self.gaurdian_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_tbl">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="gaurdian_tbl">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payment_tbl_ibfk_1">
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="0..1" />
+          <End Role="payment_tbl" Type="Self.payment_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_tbl">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="payment_tbl">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payment_tbl_ibfk_2">
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="0..1" />
+          <End Role="payment_tbl" Type="Self.payment_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_tbl">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="payment_tbl">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_tbl_ibfk_2">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="student_tbl" Type="Self.student_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="student_tbl">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teacher_tbl_ibfk_1">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="teacher_tbl" Type="Self.teacher_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="teacher_tbl">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_tbl_ibfk_1">
+          <End Role="status_tbl" Type="Self.status_tbl" Multiplicity="0..1" />
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_tbl">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="user_tbl">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="course_tble" EntityType="Self.course_tble" />
+          <EntitySet Name="gaurdian_tbl" EntityType="Self.gaurdian_tbl" />
+          <EntitySet Name="payment_tbl" EntityType="Self.payment_tbl" />
+          <EntitySet Name="status_tbl" EntityType="Self.status_tbl" />
+          <EntitySet Name="student_tbl" EntityType="Self.student_tbl" />
+          <EntitySet Name="teacher_tbl" EntityType="Self.teacher_tbl" />
+          <EntitySet Name="user_tbl" EntityType="Self.user_tbl" />
+          <AssociationSet Name="course_tble_ibfk_1" Association="Self.course_tble_ibfk_1">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="course_tble" EntitySet="course_tble" />
+          </AssociationSet>
+          <AssociationSet Name="student_tbl_ibfk_1" Association="Self.student_tbl_ibfk_1">
+            <End Role="course_tble" EntitySet="course_tble" />
+            <End Role="student_tbl" EntitySet="student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="gaurdian_tbl_ibfk_1" Association="Self.gaurdian_tbl_ibfk_1">
+            <End Role="student_tbl" EntitySet="student_tbl" />
+            <End Role="gaurdian_tbl" EntitySet="gaurdian_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="payment_tbl_ibfk_1" Association="Self.payment_tbl_ibfk_1">
+            <End Role="student_tbl" EntitySet="student_tbl" />
+            <End Role="payment_tbl" EntitySet="payment_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="payment_tbl_ibfk_2" Association="Self.payment_tbl_ibfk_2">
+            <End Role="user_tbl" EntitySet="user_tbl" />
+            <End Role="payment_tbl" EntitySet="payment_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="student_tbl_ibfk_2" Association="Self.student_tbl_ibfk_2">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="student_tbl" EntitySet="student_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="teacher_tbl_ibfk_1" Association="Self.teacher_tbl_ibfk_1">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="teacher_tbl" EntitySet="teacher_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="user_tbl_ibfk_1" Association="Self.user_tbl_ibfk_1">
+            <End Role="status_tbl" EntitySet="status_tbl" />
+            <End Role="user_tbl" EntitySet="user_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cmsdbModelStoreContainer" CdmEntityContainer="dbEntities">
+          <EntitySetMapping Name="course_tble">
+            <EntityTypeMapping TypeName="cmsdbModel.course_tble">
+              <MappingFragment StoreEntitySet="course_tble">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseDuration" ColumnName="CourseDuration" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gaurdian_tbl">
+            <EntityTypeMapping TypeName="cmsdbModel.gaurdian_tbl">
+              <MappingFragment StoreEntitySet="gaurdian_tbl">
+                <ScalarProperty Name="GaurdianId" ColumnName="GaurdianId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Cell" ColumnName="Cell" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment_tbl">
+            <EntityTypeMapping TypeName="cmsdbModel.payment_tbl">
+              <MappingFragment StoreEntitySet="payment_tbl">
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CaptureDate" ColumnName="CaptureDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status_tbl">
+            <EntityTypeMapping TypeName="cmsdbModel.status_tbl">
+              <MappingFragment StoreEntitySet="status_tbl">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="student_tbl">
+            <EntityTypeMapping TypeName="cmsdbModel.student_tbl">
+              <MappingFragment StoreEntitySet="student_tbl">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Cell" ColumnName="Cell" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PostallAddress" ColumnName="PostallAddress" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teacher_tbl">
+            <EntityTypeMapping TypeName="cmsdbModel.teacher_tbl">
+              <MappingFragment StoreEntitySet="teacher_tbl">
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Cell" ColumnName="Cell" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_tbl">
+            <EntityTypeMapping TypeName="cmsdbModel.user_tbl">
+              <MappingFragment StoreEntitySet="user_tbl">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
