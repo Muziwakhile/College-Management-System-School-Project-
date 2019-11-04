@@ -20,7 +20,7 @@ namespace CollegeManagementSystem
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (Emailtxt.Text == "")
+            if (Emailtxt.Text != "")
             {
                 try
                 {

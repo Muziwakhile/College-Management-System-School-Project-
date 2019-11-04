@@ -34,7 +34,7 @@ namespace CollegeManagementSystem
 
         private void UpdateBtn_Click(object sender, EventArgs e)
         {
-            if (Emailtxt.Text == "")
+            if (Emailtxt.Text != "")
             {
                 try
                 {

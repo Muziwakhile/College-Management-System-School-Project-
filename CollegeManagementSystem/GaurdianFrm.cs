@@ -21,7 +21,7 @@ namespace CollegeManagementSystem
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             int studentid = int.Parse(Studenttxt.Text);
-            if (Emailtxt.Text == "")
+            if (Emailtxt.Text != "")
             {
                 try
                 {
@@ -50,8 +50,11 @@ namespace CollegeManagementSystem
                         }
                         else
                         {
+                            FormOperations.student = null;
+                            FormOperations._ID = 0;
                             FormOperations.OpenMenu();
                             this.Close();
+                          
                         }
 
                     }

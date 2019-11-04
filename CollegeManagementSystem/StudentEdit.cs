@@ -52,7 +52,7 @@ namespace CollegeManagementSystem
                 value =DataAccess.GetCourseID(CourseCmb.Text.ToString());
                 semester = int.Parse(SemesterCmb.SelectedItem.ToString());
             }
-            if (EmailTxt.Text =="")
+            if (EmailTxt.Text !="")
             {
                 try
                 {

@@ -141,6 +141,7 @@ namespace CollegeManagementSystem.DTO
 
                 result.Name = st.Name;
                 result.Surname = st.Surname;
+                result.Gender = st.Gender;
                 result.Cell = st.Cell;
                 result.Email = st.Email;
                 result.PostallAddress = st.PostalAddress;
